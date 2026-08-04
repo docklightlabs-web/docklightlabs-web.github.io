@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Docklight Labs builds offline-first Android field tools, reference apps, and utilities — bought once, owned forever.">
+  <meta name="theme-color" content="#090b0a">
+  <title>Docklight Labs — Android apps for people who actually do things</title>
+  <style>
+    :root {
+      --bg:#090b0a;
+      --panel:#111512;
+      --panel-2:#171d19;
+      --line:#283029;
+      --text:#eef2ec;
+      --muted:#98a399;
+      --green:#aaee22;
+      --green-d:#739f1d;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(calc(100% - 32px),var(--max));margin:auto}
+    .nav{position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(170,238,34,.16);background:rgba(9,11,10,.88);backdrop-filter:blur(16px)}
+    .nav-inner{height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-weight:800;letter-spacing:.08em;text-transform:uppercase}.brand span{color:var(--green)}
+    .nav-links{display:flex;gap:20px;color:var(--muted);font-size:.92rem}.nav-links a:hover{color:var(--green)}
+    .hero{padding:92px 0 72px;border-bottom:1px solid var(--line);overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:center}
+    .eyebrow{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px}
+    h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.96;letter-spacing:-.055em;margin:0 0 28px;max-width:900px}
+    .hero p{font-size:clamp(1.05rem,2vw,1.3rem);color:#c1c9c0;max-width:720px;margin:0 0 34px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border:1px solid var(--line);font-weight:750;font-size:.94rem}.button.primary{background:var(--green);border-color:var(--green);color:#0a0d09}.button.secondary:hover{border-color:var(--green);color:var(--green)}
+    .signal{min-height:360px;position:relative;display:grid;place-items:center}
+    .signal:before,.signal:after{content:"";position:absolute;border:1px solid rgba(170,238,34,.3);border-radius:50%;inset:12%}.signal:after{inset:27%;border-color:rgba(170,238,34,.65)}
+    .mark{width:120px;height:120px;background:var(--green);clip-path:polygon(50% 0,64% 35%,100% 50%,64% 65%,50% 100%,36% 65%,0 50%,36% 35%);filter:drop-shadow(0 0 30px rgba(170,238,34,.25))}
+    section{padding:78px 0;border-bottom:1px solid var(--line)}
+    .section-head{display:grid;grid-template-columns:.45fr 1fr;gap:36px;margin-bottom:36px}.section-kicker{color:var(--green);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.16em;font-size:.75rem}.section-head h2{font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;letter-spacing:-.035em;margin:0}.section-head p{margin:14px 0 0;color:var(--muted);max-width:720px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:var(--panel);border:1px solid var(--line);padding:26px;min-height:220px}.card .num{color:var(--green);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem}.card h3{font-size:1.35rem;margin:42px 0 10px}.card p{color:var(--muted);margin:0}
+    .principles{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.principle{background:var(--bg);padding:28px}.principle strong{display:block;font-size:1.25rem;margin-bottom:8px}.principle span{color:var(--muted)}
+    .statement{padding:90px 0}.statement blockquote{font-size:clamp(2rem,5vw,4.6rem);line-height:1.05;letter-spacing:-.045em;margin:0;max-width:1000px}.statement em{font-style:normal;color:var(--green)}
+    .contact{display:grid;grid-template-columns:1fr auto;align-items:end;gap:30px}.contact h2{font-size:clamp(2.2rem,5vw,4.7rem);line-height:1;margin:0 0 18px}.contact p{color:var(--muted);max-width:650px;margin:0}
+    footer{padding:28px 0;color:#6f786f;font-size:.84rem}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:820px){.hero-grid,.section-head,.contact{grid-template-columns:1fr}.signal{min-height:240px}.grid{grid-template-columns:1fr}.principles{grid-template-columns:1fr}.nav-links{display:none}.hero{padding-top:70px}.section-head{gap:12px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">Docklight <span>Labs</span></a>
+      <div class="nav-links">
+        <a href="#work">What we build</a>
+        <a href="#principles">Principles</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Independent Android software studio</div>
+          <h1>Apps for people who actually do things.</h1>
+          <p>Docklight Labs builds Android apps for people who actually do things. Field tools, reference apps, utilities — built offline-first, bought once, owned forever.</p>
+          <div class="actions">
+            <a class="button primary" href="#work">See what we build</a>
+            <a class="button secondary" href="mailto:docklightlabs@gmail.com">Contact the studio</a>
+          </div>
+        </div>
+        <div class="signal" aria-hidden="true"><div class="mark"></div></div>
+      </div>
+    </header>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-kicker">What we build</div>
+          <div><h2>Small tools. Clear jobs. No account required.</h2><p>Each product starts with a practical problem and ends with a usable tool. No bloated platforms. No forced cloud dependency.</p></div>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="num">01 / FIELD</div><h3>Field tools</h3><p>Utilities designed for real work, fast capture, rough environments, and decisions made away from a desk.</p></article>
+          <article class="card"><div class="num">02 / REFERENCE</div><h3>Reference apps</h3><p>Focused information that stays available when the signal disappears and the job still needs doing.</p></article>
+          <article class="card"><div class="num">03 / UTILITY</div><h3>Everyday utilities</h3><p>Single-purpose tools that remove friction without asking you to build a new habit around them.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="principles">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-kicker">Studio principles</div>
+          <div><h2>Software should serve the owner.</h2><p>Docklight Labs products are built around control, durability, and direct usefulness.</p></div>
+        </div>
+        <div class="principles">
+          <div class="principle"><strong>Offline first</strong><span>Core functions should keep working without a network connection.</span></div>
+          <div class="principle"><strong>Bought once</strong><span>No subscriptions. Useful software should not become a permanent bill.</span></div>
+          <div class="principle"><strong>Private by default</strong><span>No login, tracking, or cloud storage unless the function genuinely requires it.</span></div>
+          <div class="principle"><strong>Focused scope</strong><span>One clear job beats a sprawling feature list.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="statement">
+      <div class="wrap"><blockquote>“Ship what you can own. <em>That’s the lane.</em>”</blockquote></div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap contact">
+        <div><div class="section-kicker">Contact</div><h2>Have a practical problem worth solving?</h2><p>Docklight Labs develops focused Android tools and evaluates straightforward utility concepts.</p></div>
+        <a class="button primary" href="mailto:docklightlabs@gmail.com">docklightlabs@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner"><span>© 2026 Docklight Labs</span><span><a href="privacy.html">Privacy policy</a></span></div>
+  </footer>
+</body>
+</html>
