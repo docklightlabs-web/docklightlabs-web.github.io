@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090b0a">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Docklight Labs — Client Interview</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Docklight <span>Labs</span></a>
+    <span class="private">Private project intake</span>
+  </header>
+
+  <main class="shell">
+    <section id="loading" class="card centered">
+      <div class="eyebrow">Private project</div>
+      <h1>Loading your project…</h1>
+    </section>
+
+    <section id="error" class="card centered hidden">
+      <div class="eyebrow">Private project</div>
+      <h1>That project link is not available.</h1>
+      <p id="errorText">Check the link you were sent by Docklight Labs.</p>
+    </section>
+
+    <section id="login" class="card centered hidden">
+      <div class="eyebrow">Private project</div>
+      <h1 id="loginTitle">Project interview</h1>
+      <p id="loginClient" class="muted"></p>
+      <p>Enter the six-digit PIN that came with this project link.</p>
+      <form id="loginForm" class="stack">
+        <label>Project PIN
+          <input id="pin" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+        </label>
+        <button class="button" type="submit">Open project</button>
+      </form>
+    </section>
+
+    <section id="project" class="hidden">
+      <div class="project-head">
+        <div>
+          <div id="projectClient" class="eyebrow"></div>
+          <h1 id="projectTitle"></h1>
+        </div>
+        <button id="logoutBtn" class="button secondary" type="button">Lock</button>
+      </div>
+
+      <div class="progress"><span id="progressBar"></span></div>
+      <div id="progressLabel" class="progress-label"></div>
+
+      <section id="questionCard" class="card hidden">
+        <div class="eyebrow">Current question</div>
+        <h2 id="questionText"></h2>
+        <button id="hearBtn" class="button secondary" type="button" disabled>🔊 Hear question</button>
+      </section>
+
+      <form id="answerForm" class="card hidden">
+        <label>Your answer
+          <textarea id="answer" rows="10" maxlength="20000" placeholder="Type naturally. You can be as brief or detailed as you want." required></textarea>
+        </label>
+        <div class="answer-actions">
+          <button id="speakBtn" class="button secondary" type="button" disabled>🎙 Speak answer</button>
+          <button class="button" type="submit">Send answer</button>
+        </div>
+        <p class="micro">Voice controls activate when the Docklight Voice Relay is connected. Typed answers work now.</p>
+      </form>
+
+      <section id="waitingCard" class="card hidden">
+        <div class="eyebrow">Answer received</div>
+        <h2>Docklight is preparing the next question.</h2>
+        <p>You can leave this page. Your project is saved. If you stay here, this page will update automatically.</p>
+      </section>
+
+      <section id="reviewCard" class="card hidden">
+        <div class="eyebrow">Interview complete</div>
+        <h2>Your requirements are ready for review.</h2>
+        <p>The Requirements/Scope service will provide the approved scope here when that component is connected.</p>
+      </section>
+
+      <section id="approvedCard" class="card hidden">
+        <div class="eyebrow">Scope approved</div>
+        <h2>This project has an approved requirements snapshot.</h2>
+        <p>Any later changes should be recorded as scope changes rather than silently rewriting the original agreement.</p>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
