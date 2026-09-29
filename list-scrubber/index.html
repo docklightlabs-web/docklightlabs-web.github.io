@@ -130,7 +130,11 @@ function render(){
  el("download").disabled=false;el("audit").disabled=false;run.disabled=false;
 }
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function csvCell(v){v=String(v==null?"":v);return /[",\r\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function csvCell(v){
+ v=String(v==null?"":v);
+ const needsQuotes=v.includes(",")||v.includes(String.fromCharCode(10))||v.includes(String.fromCharCode(13))||v.includes('"');
+ return needsQuotes?'"'+v.replace(/"/g,'""')+'"':v;
+}
 function download(name,rows){const blob=new Blob([rows.map(r=>r.map(csvCell).join(",")).join("
 ")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function loadFile(f){
