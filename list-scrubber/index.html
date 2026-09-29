@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b0a">
+<meta name="description" content="DockLight List Scrubber removes obvious bad email addresses before you pay for deep verification.">
+<title>DockLight List Scrubber — Don’t pay to verify garbage</title>
+<style>
+:root{--bg:#090b0a;--panel:#111512;--panel2:#171d19;--line:#283029;--text:#eef2ec;--muted:#98a399;--green:#aaee22;--bad:#ff6b6b;--warn:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:inherit}.wrap{width:min(1100px,calc(100% - 28px));margin:auto}.nav{border-bottom:1px solid var(--line);padding:18px 0}.brand{font-weight:800;letter-spacing:.08em;text-decoration:none;text-transform:uppercase}.brand span{color:var(--green)}
+main{padding:52px 0 80px}.eyebrow{color:var(--green);font:12px ui-monospace,monospace;letter-spacing:.15em;text-transform:uppercase}
+h1{font-size:clamp(2.3rem,7vw,5rem);line-height:.95;letter-spacing:-.05em;margin:.4rem 0 1rem;max-width:900px}.lede{color:#c4ccc3;font-size:1.15rem;max-width:760px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-top:34px}.panel{background:var(--panel);border:1px solid var(--line);padding:22px}.panel h2{margin-top:0}
+.drop{border:1px dashed #566257;padding:34px 20px;text-align:center;background:var(--panel2);cursor:pointer}.drop.drag{border-color:var(--green)}input[type=file]{display:none}
+button{border:0;background:var(--green);color:#0a0d09;padding:12px 17px;font-weight:800;cursor:pointer}button.secondary{background:transparent;color:var(--text);border:1px solid var(--line)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.small{font-size:.85rem;color:var(--muted)}.status{margin-top:14px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.stat{border:1px solid var(--line);background:var(--panel2);padding:14px}.stat b{display:block;font-size:1.55rem}.send b{color:var(--green)}.question b{color:var(--warn)}.reject b{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--muted);font-size:.75rem;text-transform:uppercase}.table-wrap{overflow:auto;max-height:430px;border:1px solid var(--line)}
+.badge{display:inline-block;padding:2px 8px;border:1px solid var(--line);font-size:.72rem;font-weight:800}.badge.send{color:var(--green)}.badge.questionable{color:var(--warn)}.badge.reject{color:var(--bad)}
+.checks{display:grid;gap:8px}.check{padding:10px 0;border-bottom:1px solid var(--line)}footer{padding:24px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+.notice{margin-top:18px;padding:13px;border-left:3px solid var(--green);background:var(--panel2);color:#c5cdc5}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}main{padding-top:34px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap"><a class="brand" href="/">DockLight <span>Labs</span></a></div></nav>
+<main><div class="wrap">
+<div class="eyebrow">DockLight List Scrubber · MVP</div>
+<h1>Don’t pay to verify garbage.</h1>
+<p class="lede">Upload a CSV. We remove the cheap, obvious failures first, classify the rest, and give you a cleaner file to send to a deep verifier only if you need one.</p>
+<div class="grid">
+<section class="panel">
+<h2>Scrub a list</h2>
+<label class="drop" id="drop" for="file">
+<strong>Drop a CSV here or tap to choose</strong><br>
+<span class="small">Your list stays in your browser. MX checks send only domain names to Google Public DNS.</span>
+</label>
+<input id="file" type="file" accept=".csv,text/csv">
+<div class="controls">
+<button id="run" disabled>Run scrubber</button>
+<button id="download" class="secondary" disabled>Download cleaned CSV</button>
+<button id="audit" class="secondary" disabled>Download audit CSV</button>
+</div>
+<div id="status" class="status">No file loaded.</div>
+<div id="stats" class="stats" hidden>
+<div class="stat"><span>Total</span><b id="nTotal">0</b></div>
+<div class="stat send"><span>Send</span><b id="nSend">0</b></div>
+<div class="stat question"><span>Questionable</span><b id="nQ">0</b></div>
+<div class="stat reject"><span>Reject</span><b id="nReject">0</b></div>
+</div>
+<div class="table-wrap" id="tableWrap" hidden>
+<table><thead><tr><th>Email</th><th>Class</th><th>Reason</th></tr></thead><tbody id="rows"></tbody></table>
+</div>
+</section>
+<aside class="panel">
+<h2>What v1 checks</h2>
+<div class="checks">
+<div class="check"><strong>Duplicates</strong><div class="small">Keeps the first occurrence, rejects repeats.</div></div>
+<div class="check"><strong>Syntax</strong><div class="small">Rejects malformed addresses and impossible-looking domains.</div></div>
+<div class="check"><strong>Role accounts</strong><div class="small">Flags addresses such as info@, sales@, support@ and admin@ as Questionable.</div></div>
+<div class="check"><strong>Disposable domains</strong><div class="small">Rejects known throwaway-mail domains in the bundled list.</div></div>
+<div class="check"><strong>DNS / MX</strong><div class="small">Rejects domains that cannot accept email; temporary lookup failures stay Questionable.</div></div>
+</div>
+<div class="notice"><strong>What this does not promise:</strong> a Send classification is not a guarantee that a mailbox exists or that mail will be delivered. This is a cost-saving pre-scrub, not deep verification.</div>
+</aside>
+</div>
+</div></main>
+<footer><div class="wrap">© 2026 DockLight Labs · Focused tools for practical jobs.</div></footer>
+<script>
+const roleNames=new Set(["admin","administrator","billing","contact","customerservice","hello","help","info","jobs","marketing","office","orders","privacy","sales","security","service","support","team","webmaster"]);
+const disposable=new Set(["10minutemail.com","10minutemail.net","dispostable.com","fakeinbox.com","guerrillamail.com","guerrillamail.net","guerrillamail.org","maildrop.cc","mailinator.com","mailnesia.com","mintemail.com","mohmal.com","sharklasers.com","temp-mail.org","tempail.com","tempmail.com","throwawaymail.com","yopmail.com"]);
+let sourceRows=[],emailCol=-1,results=[];
+const el=id=>document.getElementById(id);
+const drop=el("drop"),fileInput=el("file"),run=el("run");
+function parseCSV(text){
+ const out=[];let row=[],cell="",q=false;
+ for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];
+  if(q){if(c=='"'&&n=='"'){cell+='"';i++;}else if(c=='"')q=false;else cell+=c;}
+  else if(c=='"')q=true;
+  else if(c==','){row.push(cell);cell="";}
+  else if(c=='\n'){row.push(cell.replace(/\r$/,""));out.push(row);row=[];cell="";}
+  else cell+=c;
+ }
+ if(cell.length||row.length){row.push(cell.replace(/\r$/,""));out.push(row);}
+ return out.filter(r=>r.some(v=>v.trim()!==""));
+}
+function detectEmailColumn(rows){
+ if(!rows.length)return -1;const hdr=rows[0].map(x=>x.trim().toLowerCase());
+ let i=hdr.findIndex(x=>["email","email address","e-mail","email_address"].includes(x));if(i>=0)return i;
+ const sample=rows.slice(0,Math.min(rows.length,20));let best=-1,bestN=0;
+ for(let c=0;c<Math.max(...sample.map(r=>r.length));c++){let n=0;sample.forEach(r=>{if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((r[c]||"").trim()))n++});if(n>bestN){bestN=n;best=c}}
+ return best;
+}
+function validSyntax(email){
+ if(email.length>254||/\s/.test(email))return false;
+ const parts=email.split("@");if(parts.length!==2)return false;
+ const local=parts[0],domain=parts[1];if(!local||local.length>64||!domain||domain.length>253)return false;
+ if(local.startsWith(".")||local.endsWith(".")||local.includes(".."))return false;
+ if(!/^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/i.test(local))return false;
+ if(!/^[a-z0-9.-]+$/i.test(domain)||domain.startsWith(".")||domain.endsWith(".")||domain.includes("..")||!domain.includes("."))return false;
+ return domain.split(".").every(x=>x&&x.length<=63&&!x.startsWith("-")&&!x.endsWith("-"));
+}
+async function mxStatus(domain){
+ try{const r=await fetch("https://dns.google/resolve?name="+encodeURIComponent(domain)+"&type=MX");if(!r.ok)return "unknown";const d=await r.json();if(d.Status!==0)return d.Status===3?"none":"unknown";return Array.isArray(d.Answer)&&d.Answer.some(a=>a.type===15)?"mx":"none"}catch(e){return "unknown"}
+}
+async function scrub(){
+ run.disabled=true;results=[];el("status").textContent="Scrubbing…";
+ const seen=new Set(),data=sourceRows.slice(1),domainCache=new Map(),prelim=[];
+ for(const row of data){
+  const raw=(row[emailCol]||"").trim(),email=raw.toLowerCase();let cls="Send",reason="Passed cheap checks",domain="";
+  if(!email){cls="Reject";reason="Blank email"}
+  else if(seen.has(email)){cls="Reject";reason="Duplicate"}
+  else if(!validSyntax(email)){cls="Reject";reason="Invalid syntax"}
+  else{seen.add(email);const parts=email.split("@"),local=parts[0];domain=parts[1];if(disposable.has(domain)){cls="Reject";reason="Disposable domain"}else if(roleNames.has(local)){cls="Questionable";reason="Role account"}}
+  prelim.push({row:row,email:raw||email,normalized:email,domain:domain,cls:cls,reason:reason});
+ }
+ const domains=[...new Set(prelim.filter(x=>x.cls!=="Reject"&&x.domain).map(x=>x.domain))];let done=0;
+ for(const domain of domains){domainCache.set(domain,await mxStatus(domain));done++;el("status").textContent="Checking MX records… "+done+"/"+domains.length}
+ results=prelim.map(x=>{if(x.cls==="Reject"||!x.domain)return x;const mx=domainCache.get(x.domain);if(mx==="none")return Object.assign({},x,{cls:"Reject",reason:"No MX record"});if(mx==="unknown")return Object.assign({},x,{cls:"Questionable",reason:x.reason==="Role account"?"Role account; MX lookup inconclusive":"MX lookup inconclusive"});return x});
+ render();
+}
+function render(){
+ const count=c=>results.filter(x=>x.cls===c).length;
+ el("nTotal").textContent=results.length;el("nSend").textContent=count("Send");el("nQ").textContent=count("Questionable");el("nReject").textContent=count("Reject");
+ el("stats").hidden=false;el("tableWrap").hidden=false;
+ el("rows").innerHTML=results.slice(0,500).map(x=>'<tr><td>'+escapeHTML(x.email)+'</td><td><span class="badge '+x.cls.toLowerCase()+'">'+x.cls+'</span></td><td>'+escapeHTML(x.reason)+'</td></tr>').join("");
+ el("status").textContent="Done. "+results.length+" rows classified"+(results.length>500?"; showing first 500 below":"")+".";
+ el("download").disabled=false;el("audit").disabled=false;run.disabled=false;
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function csvCell(v){v=String(v==null?"":v);return /[",
+]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function download(name,rows){const blob=new Blob([rows.map(r=>r.map(csvCell).join(",")).join("
+")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function loadFile(f){
+ if(!f)return;const reader=new FileReader();reader.onload=()=>{sourceRows=parseCSV(reader.result);emailCol=detectEmailColumn(sourceRows);if(emailCol<0){el("status").textContent="Could not identify an email column.";run.disabled=true;return}el("status").textContent=f.name+": "+Math.max(0,sourceRows.length-1)+" data rows. Ready.";run.disabled=false};reader.readAsText(f);
+}
+fileInput.addEventListener("change",()=>loadFile(fileInput.files[0]));
+drop.addEventListener("dragover",e=>{e.preventDefault();drop.classList.add("drag")});
+drop.addEventListener("dragleave",()=>drop.classList.remove("drag"));
+drop.addEventListener("drop",e=>{e.preventDefault();drop.classList.remove("drag");loadFile(e.dataTransfer.files[0])});
+run.addEventListener("click",scrub);
+el("download").addEventListener("click",()=>{const hdr=sourceRows[0]||["email"];const kept=results.filter(x=>x.cls!=="Reject").map(x=>x.row);download("docklight-cleaned.csv",[hdr,...kept])});
+el("audit").addEventListener("click",()=>{download("docklight-audit.csv",[["email","classification","reason"],...results.map(x=>[x.email,x.cls,x.reason])])});
+</script>
+</body>
+</html>
