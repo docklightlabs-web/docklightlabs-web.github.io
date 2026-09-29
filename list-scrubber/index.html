@@ -135,8 +135,16 @@ function csvCell(v){
  const needsQuotes=v.includes(",")||v.includes(String.fromCharCode(10))||v.includes(String.fromCharCode(13))||v.includes('"');
  return needsQuotes?'"'+v.replace(/"/g,'""')+'"':v;
 }
-function download(name,rows){const blob=new Blob([rows.map(r=>r.map(csvCell).join(",")).join("
-")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function download(name,rows){
+ const lineBreak=String.fromCharCode(13)+String.fromCharCode(10);
+ const csv=rows.map(r=>r.map(csvCell).join(",")).join(lineBreak);
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=name;
+ a.click();
+ setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
 function loadFile(f){
  if(!f)return;const reader=new FileReader();reader.onload=()=>{sourceRows=parseCSV(reader.result);emailCol=detectEmailColumn(sourceRows);if(emailCol<0){el("status").textContent="Could not identify an email column.";run.disabled=true;return}el("status").textContent=f.name+": "+Math.max(0,sourceRows.length-1)+" data rows. Ready.";run.disabled=false};reader.readAsText(f);
 }
