@@ -122,8 +122,10 @@ async function scrub(){
   if(KNOWN_CATCH_ALL_DOMAINS.has(obj.domain))addSignal(obj,"questionable","catch_all_known","Known catch-all domain");
   obj.reason=finalizeReason(obj);prelim.push(obj);
  }
- const domains=[...new Set(prelim.filter(x=>x.cls!=="Reject"&&x.domain).map(x=>x.domain))],cache=new Map();let done=0;
- for(const domain of domains){cache.set(domain,await domainStatus(domain));done++;el("status").textContent="DNS/mail routing "+done+"/"+domains.length+" · disposable list "+disposableCount.toLocaleString()+" domains"}
+ const domains=[...new Set(prelim.filter(x=>x.cls!=="Reject"&&x.domain).map(x=>x.domain))],cache=new Map();let done=0,next=0;
+ const worker=async()=>{while(true){const i=next++;if(i>=domains.length)return;const domain=domains[i];cache.set(domain,await domainStatus(domain));done++;el("status").textContent="DNS/mail routing "+done+"/"+domains.length+" · disposable list "+disposableCount.toLocaleString()+" domains"}};
+ const workerCount=Math.min(20,domains.length||1);
+ await Promise.all(Array.from({length:workerCount},()=>worker()));
  results=prelim.map(obj=>{
   if(obj.cls==="Reject"||!obj.domain){obj.reason=finalizeReason(obj);return obj}
   const ds=cache.get(obj.domain);if(!ds){addSignal(obj,"questionable","dns_unknown","DNS lookup inconclusive");obj.reason=finalizeReason(obj);return obj}
