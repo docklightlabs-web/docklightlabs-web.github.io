@@ -174,13 +174,13 @@ function render(disposableCount){
  el("stats").hidden=false;el("tableWrap").hidden=false;
  el("rows").innerHTML=results.slice(0,500).map(x=>'<tr><td>'+escapeHTML(x.email)+'</td><td><span class="badge '+x.cls.toLowerCase()+'">'+x.cls+'</span></td><td>'+escapeHTML(x.reason)+'</td></tr>').join("");
  el("status").textContent="Done. "+results.length+" rows classified · "+disposableCount.toLocaleString()+" disposable domains loaded"+(results.length>500?"; showing first 500 below":"")+".";
- el("download").disabled=false;el("audit").disabled=false;run.disabled=false;
+ el("download").disabled=false;el("audit").disabled=false;run.disabled=false;deep.disabled=deepVerified||!results.some(x=>x.cls!=="Reject");
 }
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function csvCell(v){v=String(v==null?"":v);const needsQuotes=v.includes(",")||v.includes(String.fromCharCode(10))||v.includes(String.fromCharCode(13))||v.includes('"');return needsQuotes?'"'+v.replace(/"/g,'""')+'"':v}
 function download(name,rows){const lineBreak=String.fromCharCode(13)+String.fromCharCode(10),csv=rows.map(r=>r.map(csvCell).join(",")).join(lineBreak),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function loadFile(f){
- if(!f)return;const reader=new FileReader();reader.onload=()=>{sourceRows=parseCSV(reader.result);emailCol=detectEmailColumn(sourceRows);results=[];el("stats").hidden=true;el("tableWrap").hidden=true;el("download").disabled=true;el("audit").disabled=true;if(emailCol<0){el("status").textContent="Could not identify an email column.";run.disabled=true;return}el("status").textContent=f.name+": "+Math.max(0,sourceRows.length-1)+" data rows. Ready.";run.disabled=false};reader.readAsText(f);
+ if(!f)return;const reader=new FileReader();reader.onload=()=>{sourceRows=parseCSV(reader.result);emailCol=detectEmailColumn(sourceRows);results=[];deepVerified=false;el("stats").hidden=true;el("tableWrap").hidden=true;el("download").disabled=true;el("audit").disabled=true;deep.disabled=true;if(emailCol<0){el("status").textContent="Could not identify an email column.";run.disabled=true;return}el("status").textContent=f.name+": "+Math.max(0,sourceRows.length-1)+" data rows. Ready.";run.disabled=false};reader.readAsText(f);
 }
 fileInput.addEventListener("change",()=>loadFile(fileInput.files[0]));
 drop.addEventListener("dragover",e=>{e.preventDefault();e.stopPropagation();drop.classList.add("drag")});
@@ -190,5 +190,6 @@ drop.addEventListener("drop",e=>{e.preventDefault();e.stopPropagation();drop.cla
 document.addEventListener("dragover",e=>e.preventDefault());
 document.addEventListener("drop",e=>e.preventDefault());
 run.addEventListener("click",scrub);
+deep.addEventListener("click",deepVerify);
 el("download").addEventListener("click",()=>{const hdr=sourceRows[0]||["email"],kept=results.filter(x=>x.cls!=="Reject").map(x=>x.row);download("docklight-cleaned.csv",[hdr,...kept])});
-el("audit").addEventListener("click",()=>{download("docklight-audit.csv",[["email","classification","reason","provider","signals"],...results.map(x=>[x.email,x.cls,x.reason,x.provider,x.signals.map(s=>s.code).join("|")])])});
+el("audit").addEventListener("click",()=>{download("docklight-audit.csv",[["email","classification","reason","provider","signals","stage1_class","stage1_reason","smtp_class","smtp_reason","smtp_code","smtp_message"],...results.map(x=>[x.email,x.cls,x.reason,x.provider,x.signals.map(s=>s.code).join("|"),x.stage1Class||x.cls,x.stage1Reason||x.reason,x.smtpClass||"",x.smtpReason||"",x.smtpCode||"",x.smtpMessage||""])])});
