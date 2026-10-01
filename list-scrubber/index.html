@@ -40,6 +40,7 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 <input id="file" type="file" accept=".csv,text/csv">
 <div class="controls">
 <button id="run" disabled>Run scrubber</button>
+<button id="deep" class="secondary" disabled>Deep Verify Survivors</button>
 <button id="download" class="secondary" disabled>Download cleaned CSV</button>
 <button id="audit" class="secondary" disabled>Download audit CSV</button>
 </div>
@@ -68,11 +69,11 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 <div class="check"><strong>Provider classification</strong><div class="small">Records common mail providers from MX data for later provider-specific SMTP behavior.</div></div>
 <div class="check"><strong>Audit signals</strong><div class="small">Exports every triggered rule so we can tune categories instead of hard-coding individual addresses.</div></div>
 </div>
-<div class="notice"><strong>What this does not promise:</strong> a Send classification is not a guarantee that a mailbox exists or that mail will be delivered. This is a cost-saving pre-scrub, not deep verification.</div>
+<div class="notice"><strong>Two-stage verification:</strong> the first pass removes cheap failures in your browser. Deep Verify then asks DockLight's Outpost SMTP worker whether surviving mailboxes are accepted, rejected, catch-all, or inconclusive. No message body is sent.</div>
 </aside>
 </div>
 </div></main>
 <footer><div class="wrap">© 2026 DockLight Labs · Focused tools for practical jobs.</div></footer>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
