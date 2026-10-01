@@ -101,10 +101,13 @@ async function loadDisposableList(){
  }catch{return disposableDomains.size}
 }
 function addSignal(obj,level,code,text){
- obj.signals.push({level,code,text});
+ if(!obj.signals.some(s=>s.code===code&&s.text===text))obj.signals.push({level,code,text});
  if(level==="reject")obj.cls="Reject";else if(level==="questionable"&&obj.cls!=="Reject")obj.cls="Questionable";
 }
-function finalizeReason(obj){return obj.signals.length?obj.signals.map(s=>s.text).join("; "):"Passed cheap checks"}
+function finalizeReason(obj){
+ const unique=[...new Set(obj.signals.map(s=>s.text))];
+ return unique.length?unique.join("; "):"Passed cheap checks";
+}
 async function scrub(){
  run.disabled=true;deep.disabled=true;deepVerified=false;results=[];el("status").textContent="Loading disposable-domain data…";
  const disposableCount=await loadDisposableList(),seen=new Set(),data=sourceRows.slice(1),prelim=[];lastDisposableCount=disposableCount;
