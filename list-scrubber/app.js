@@ -1,3 +1,4 @@
+const DEEP_VERIFY_URL="https://15-204-92-12.sslip.io/api/list-scrubber/verify";
 const DISPOSABLE_URL="https://disposable.github.io/disposable-email-domains/domains.txt";
 const FALLBACK_DISPOSABLE=new Set(["10minutemail.com","10minutemail.net","armyspy.com","dispostable.com","fakeinbox.com","guerrillamail.com","guerrillamail.net","guerrillamail.org","mailcatch.com","maildrop.cc","mailinator.com","mailnesia.com","mintemail.com","mohmal.com","moose-mail.com","sharklasers.com","snail-mail.net","spambog.com","temp-mail.org","tempail.com","tempmail.com","throwawaymail.com","yopmail.com"]);
 const ROLE_NAMES=new Set(["abuse","accounts","accounting","admin","administrator","billing","bookings","careers","compliance","contact","customerservice","enquiries","events","hello","help","hr","info","inquiries","jobs","legal","mail","marketing","office","orders","privacy","reception","returns","sales","security","service","support","team","web","webmaster"]);
@@ -8,9 +9,9 @@ const KNOWN_DEAD_DOMAINS=new Set(["mailblocks.com","lycos.co.uk","myrealbox.com"
 const KNOWN_CATCH_ALL_DOMAINS=new Set(["coach.com","xmailg.com"]);
 const COMMON_DOMAINS=["gmail.com","yahoo.com","hotmail.com","outlook.com","aol.com","icloud.com","live.com","msn.com","comcast.net","att.net","verizon.net","me.com","proton.me","protonmail.com","gmx.com","mail.com"];
 const PROVIDER_MX_HINTS=[["google","Google"],["outlook","Microsoft"],["protection.outlook","Microsoft"],["yahoodns","Yahoo"],["icloud","Apple"],["zoho","Zoho"],["protonmail","Proton"],["mimecast","Mimecast"],["pphosted","Proofpoint"]];
-let sourceRows=[],emailCol=-1,results=[],disposableDomains=new Set(FALLBACK_DISPOSABLE);
+let sourceRows=[],emailCol=-1,results=[],disposableDomains=new Set(FALLBACK_DISPOSABLE),lastDisposableCount=0,deepVerified=false;
 const el=id=>document.getElementById(id);
-const drop=el("drop"),fileInput=el("file"),run=el("run");
+const drop=el("drop"),fileInput=el("file"),run=el("run"),deep=el("deep");
 
 function parseCSV(text){
  const out=[];let row=[],cell="",q=false;
@@ -105,8 +106,8 @@ function addSignal(obj,level,code,text){
 }
 function finalizeReason(obj){return obj.signals.length?obj.signals.map(s=>s.text).join("; "):"Passed cheap checks"}
 async function scrub(){
- run.disabled=true;results=[];el("status").textContent="Loading disposable-domain data…";
- const disposableCount=await loadDisposableList(),seen=new Set(),data=sourceRows.slice(1),prelim=[];
+ run.disabled=true;deep.disabled=true;deepVerified=false;results=[];el("status").textContent="Loading disposable-domain data…";
+ const disposableCount=await loadDisposableList(),seen=new Set(),data=sourceRows.slice(1),prelim=[];lastDisposableCount=disposableCount;
  for(const row of data){
   const raw=(row[emailCol]||"").trim(),email=raw.toLowerCase(),obj={row,email:raw||email,normalized:email,domain:"",local:"",cls:"Send",signals:[],reason:"",provider:""};
   if(!email){addSignal(obj,"reject","blank","Blank email");prelim.push(obj);continue}
