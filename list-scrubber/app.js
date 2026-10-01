@@ -140,6 +140,34 @@ async function scrub(){
  });
  render(disposableCount);
 }
+async function deepVerify(){
+ const survivors=results.filter(x=>x.cls!=="Reject");
+ if(!survivors.length)return;
+ deep.disabled=true;run.disabled=true;
+ survivors.forEach(x=>{if(!x.stage1Class){x.stage1Class=x.cls;x.stage1Reason=x.reason}});
+ const chunks=[];for(let i=0;i<survivors.length;i+=50)chunks.push(survivors.slice(i,i+50));
+ try{
+  for(let i=0;i<chunks.length;i++){
+   el("status").textContent="Deep Verify "+(i+1)+"/"+chunks.length+" · "+Math.min((i+1)*50,survivors.length)+"/"+survivors.length+" survivors";
+   const response=await fetch(DEEP_VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({emails:chunks[i].map(x=>x.normalized||x.email)})});
+   if(!response.ok)throw new Error("Deep Verify HTTP "+response.status);
+   const data=await response.json();
+   const byEmail=new Map((data.results||[]).map(x=>[String(x.email||"").toLowerCase(),x]));
+   for(const row of chunks[i]){
+    const smtp=byEmail.get(String(row.normalized||row.email).toLowerCase());if(!smtp)continue;
+    row.smtpClass=smtp.classification||"";row.smtpReason=smtp.reason||"";row.smtpCode=smtp.target&&smtp.target.code?smtp.target.code:"";row.smtpMessage=smtp.target&&smtp.target.message?smtp.target.message:"";
+    if(smtp.classification==="invalid"){addSignal(row,"reject","smtp_invalid","SMTP permanent recipient failure")}
+    else if(smtp.classification==="catch_all"){addSignal(row,"questionable","smtp_catch_all","SMTP catch-all domain")}
+    else if(smtp.classification==="questionable"){addSignal(row,"questionable","smtp_questionable","SMTP verification inconclusive")}
+    else if(smtp.classification==="valid"){row.signals.push({level:"info",code:"smtp_valid",text:"SMTP recipient accepted; random recipient rejected"})}
+    row.reason=finalizeReason(row);
+   }
+   render(lastDisposableCount);
+  }
+  deepVerified=true;el("status").textContent="Deep Verify complete. "+survivors.length+" survivors probed; no message content sent.";
+ }catch(err){el("status").textContent="Deep Verify stopped: "+err.message+". Existing stage-1 results were preserved."}
+ finally{run.disabled=false;deep.disabled=deepVerified;el("download").disabled=false;el("audit").disabled=false}
+}
 function render(disposableCount){
  const count=c=>results.filter(x=>x.cls===c).length;
  el("nTotal").textContent=results.length;el("nSend").textContent=count("Send");el("nQ").textContent=count("Questionable");el("nReject").textContent=count("Reject");
