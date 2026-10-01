@@ -36,6 +36,13 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 <label class="drop" id="drop" for="file">
 <strong>Drop your email-list CSV here or tap to choose</strong><br>
 <span class="small">Stage 1 runs in your browser. Only domain names are used for DNS/MX checks. Deep Verify sends surviving email addresses to DockLight's SMTP verifier only when you choose it.</span>
+<div class="notice" style="margin-top:14px;text-align:left">
+<strong>Expected CSV format:</strong><br>
+First row should contain a column named <code>email</code>, then one contact per row.<br>
+Example:<br>
+<code>email<br>alice@example.com<br>bob@example.com</code><br>
+<span class="small">Extra columns such as name, company, phone, tags, etc. are fine and are preserved in the cleaned CSV.</span>
+</div>
 </label>
 <input id="file" type="file" accept=".csv,text/csv">
 <div class="controls">
