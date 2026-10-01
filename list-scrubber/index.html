@@ -21,7 +21,8 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 .badge{display:inline-block;padding:2px 8px;border:1px solid var(--line);font-size:.72rem;font-weight:800}.badge.send{color:var(--green)}.badge.questionable{color:var(--warn)}.badge.reject{color:var(--bad)}
 .checks{display:grid;gap:8px}.check{padding:10px 0;border-bottom:1px solid var(--line)}footer{padding:24px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
 .notice{margin-top:18px;padding:13px;border-left:3px solid var(--green);background:var(--panel2);color:#c5cdc5}
-@media(max-width:800px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}main{padding-top:34px}}
+.savings{margin-top:28px}.savings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.pricebox{background:var(--panel);border:1px solid var(--line);padding:22px}.pricebox h2,.pricebox h3{margin-top:0}.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.calc-row label{display:grid;gap:6px;color:var(--muted);font-size:.85rem}.calc-row input,.calc-row select{width:100%;background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:11px;font:inherit}.money{font-size:2rem;font-weight:800;color:var(--green);margin:.2rem 0}.comparison{display:grid;gap:10px;margin-top:12px}.comparison div{border:1px solid var(--line);padding:12px;background:var(--panel2)}.comparison strong{display:block}
+@media(max-width:800px){.grid,.savings-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}main{padding-top:34px}.calc-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -79,8 +80,52 @@ Example:<br>
 <div class="notice"><strong>Email verification happens in two stages:</strong> the first pass removes cheap failures in your browser. Deep Verify then asks DockLight's Outpost SMTP worker whether surviving mailboxes are accepted, rejected, catch-all, or inconclusive. No message body is sent.</div>
 </aside>
 </div>
+<section class="savings">
+<div class="savings-grid">
+<div class="pricebox">
+<div class="eyebrow">Why scrub first?</div>
+<h2>Pay premium verification rates only on the addresses that survive.</h2>
+<p>Most email verifiers charge per address checked. DockLight's first pass removes duplicates, malformed addresses, disposable domains, dead domains, and other obvious failures before you spend a paid verification credit on them.</p>
+<div class="comparison">
+<div><strong>ZeroBounce</strong><span class="small">Published pay-as-you-go: 10,000 credits at $0.0129 each ($129 total). Minimum purchase starts at 2,000 credits for $39.</span></div>
+<div><strong>Emailable</strong><span class="small">Published pay-as-you-go example: 5,000 credits for $38 ($0.0076 each).</span></div>
+<div><strong>Proofy</strong><span class="small">New-user trial: 5,000 verification credits for $5. DockLight can still reduce how many credits you consume, but this introductory offer is already very inexpensive.</span></div>
+</div>
+<p class="small">Competitor prices shown from published pricing pages checked September 30, 2026. Actual checkout totals, minimum purchases, subscriptions, refunds for unknown results, and volume tiers can change.</p>
+</div>
+<div class="pricebox">
+<div class="eyebrow">Savings calculator</div>
+<h2>How many paid checks can the pre-screen avoid?</h2>
+<div class="calc-row">
+<label>Emails in your list<input id="calcList" type="number" min="1" step="1" value="10000"></label>
+<label>Removed by DockLight first pass (%)<input id="calcPct" type="number" min="0" max="100" step="1" value="20"></label>
+</div>
+<div class="calc-row">
+<label>Premium verifier<select id="calcProvider"><option value="0.0129">ZeroBounce — $0.0129/check at 10K PAYG</option><option value="0.0076">Emailable — $0.0076/check at 5K PAYG</option></select></label>
+<label>Estimated paid checks avoided<input id="calcAvoided" type="text" readonly></label>
+</div>
+<div class="small">Estimated verification spend avoided at the selected published per-credit rate:</div>
+<div class="money" id="calcSavings">$25.80</div>
+<p class="small">Example only. This estimates credits you would not need to spend at that per-credit rate. Package minimums and provider billing rules can change the actual dollar amount you pay.</p>
+<div class="notice"><strong>The point:</strong> DockLight doesn't need to replace your favorite verifier. It can make that verifier cheaper by refusing to send obvious garbage to it.</div>
+</div>
+</div>
+</section>
 </div></main>
 <footer><div class="wrap">© 2026 DockLight Labs · Focused tools for practical jobs.</div></footer>
+<script>
+function updateSavingsCalc(){
+ const n=Math.max(0,Number(document.getElementById("calcList")?.value||0));
+ const pct=Math.min(100,Math.max(0,Number(document.getElementById("calcPct")?.value||0)));
+ const rate=Number(document.getElementById("calcProvider")?.value||0);
+ const avoided=Math.round(n*pct/100);
+ const out=document.getElementById("calcAvoided"),money=document.getElementById("calcSavings");
+ if(out)out.value=avoided.toLocaleString();
+ if(money)money.textContent=(avoided*rate).toLocaleString(undefined,{style:"currency",currency:"USD"});
+}
+["calcList","calcPct","calcProvider"].forEach(id=>document.getElementById(id)?.addEventListener("input",updateSavingsCalc));
+updateSavingsCalc();
+</script>
 <script src="app.js?v=3"></script>
 </body>
 </html>
