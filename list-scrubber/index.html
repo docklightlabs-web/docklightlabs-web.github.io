@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090b0a">
-<meta name="description" content="DockLight List Scrubber removes obvious bad email addresses before you pay for deep verification.">
-<title>DockLight List Scrubber — Don’t pay to verify garbage</title>
+<meta name="description" content="Clean and verify email lists before you pay for deep verification. DockLight List Scrubber removes obvious bad email addresses, flags questionable ones, and can deep-verify survivors.">
+<title>DockLight Email List Scrubber — Clean and Verify Email Lists</title>
 <style>
 :root{--bg:#090b0a;--panel:#111512;--panel2:#171d19;--line:#283029;--text:#eef2ec;--muted:#98a399;--green:#aaee22;--bad:#ff6b6b;--warn:#ffd166}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
@@ -27,15 +27,15 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 <body>
 <nav class="nav"><div class="wrap"><a class="brand" href="/">DockLight <span>Labs</span></a></div></nav>
 <main><div class="wrap">
-<div class="eyebrow">DockLight List Scrubber · MVP</div>
-<h1>Don’t pay to verify garbage.</h1>
-<p class="lede">Upload a CSV. We remove the cheap, obvious failures first, classify the rest, and give you a cleaner file to send to a deep verifier only if you need one.</p>
+<div class="eyebrow">Email list cleaning + verification</div>
+<h1>Clean bad emails out of your list before you pay to verify them.</h1>
+<p class="lede">Upload an email CSV. DockLight removes duplicates, malformed addresses, disposable email domains, dead mail domains, role accounts, and other obvious failures. Then Deep Verify can probe the surviving mailboxes over SMTP and classify them as Send, Questionable, or Reject.</p>
 <div class="grid">
 <section class="panel">
-<h2>Scrub a list</h2>
+<h2>Clean an email list</h2>
 <label class="drop" id="drop" for="file">
-<strong>Drop a CSV here or tap to choose</strong><br>
-<span class="small">Your list stays in your browser. MX checks send only domain names to Google Public DNS.</span>
+<strong>Drop your email-list CSV here or tap to choose</strong><br>
+<span class="small">Stage 1 runs in your browser. Only domain names are used for DNS/MX checks. Deep Verify sends surviving email addresses to DockLight's SMTP verifier only when you choose it.</span>
 </label>
 <input id="file" type="file" accept=".csv,text/csv">
 <div class="controls">
@@ -56,7 +56,7 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 </div>
 </section>
 <aside class="panel">
-<h2>What v1 checks</h2>
+<h2>What the email scrubber checks</h2>
 <div class="checks">
 <div class="check"><strong>Duplicates + syntax</strong><div class="small">Removes repeats and malformed addresses before any network work.</div></div>
 <div class="check"><strong>Disposable domains</strong><div class="small">Loads a large public disposable-domain blocklist, with a built-in fallback list.</div></div>
@@ -69,7 +69,7 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 <div class="check"><strong>Provider classification</strong><div class="small">Records common mail providers from MX data for later provider-specific SMTP behavior.</div></div>
 <div class="check"><strong>Audit signals</strong><div class="small">Exports every triggered rule so we can tune categories instead of hard-coding individual addresses.</div></div>
 </div>
-<div class="notice"><strong>Two-stage verification:</strong> the first pass removes cheap failures in your browser. Deep Verify then asks DockLight's Outpost SMTP worker whether surviving mailboxes are accepted, rejected, catch-all, or inconclusive. No message body is sent.</div>
+<div class="notice"><strong>Email verification happens in two stages:</strong> the first pass removes cheap failures in your browser. Deep Verify then asks DockLight's Outpost SMTP worker whether surviving mailboxes are accepted, rejected, catch-all, or inconclusive. No message body is sent.</div>
 </aside>
 </div>
 </div></main>
