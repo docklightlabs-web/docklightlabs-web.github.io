@@ -4,7 +4,7 @@
 
 **Main offer:** NO INTEREST / NO FINANCING MARKUP: $260 outright (30 months support/updates; 36 months for founding launch buyers), or rent-to-own $10 per month for 26 payments ($260, identical base license price). The founding cash buyer receives 10 extra months of support/updates versus installments as a reward for removing DockLight's 26-month collection risk. Each additional installment license is $9/month for its own 26-payment term. All major/minor versions and email support during entitlement. Ownership after final cleared payment; the entitled version keeps working thereafter. Customer-site form submissions stay on customer hosting by design.
 
-**Gate A:** 10 independent, credible business owners/website owners/freelancers identifying a concrete use and explicitly saying they WOULD BUY at the shown terms; count each person once. These are nonbinding intent emails, NOT sales. Passing Gate A starts the lean WordPress MVP only. Gate B = ten *paying* beta sites plus reliability/security and automated-support cost checks before full commercial launch.
+**Gate A (commercial signal):** We can build and internally test the lean WordPress MVP without waiting for signups. Seek 10 independent credible businesses, website owners or freelancers identifying a concrete use and explicitly saying they WOULD BUY at the shown terms; count each prospect once. These are nonbinding intent emails, NOT sales. Passing Gate A indicates that a paid-beta test warrants consideration, subject to verified reliability and safe submission storage. Gate B = ten *paying* beta sites plus reliability/security, backup/restore and automated-support cost checks before general commercial release. No actual purchase is accepted before a usable, tested product exists.
 
 ## Channels and tracking (no paid spend authorized)
 
@@ -33,7 +33,7 @@ Two potential purchase options for a first license:
 - $10/month for 26 payments ($260 total), then permanent ownership of the latest version available when the final payment clears. All releases and email support included during the payment term.
 - $260 upfront, immediate ownership, 36 months of support and version updates under a proposed launch promotion.
 
-I'm setting a specific build gate: 10 *real* business owners or website operators telling me they'd buy at one of those price points, including an actual intended use, is enough to start a WordPress MVP.
+I'm setting a specific build gate: 10 *real* business owners or website operators telling me they'd buy at one of those price points, including an actual intended use, would justify testing a paid beta; prototype development can begin without deposits.
 
 What currently makes your contact/quote forms expensive or awkward? If you'd genuinely purchase at one of these prices, the offer and intent-email buttons are here: https://docklightlabs.com/own-your-forms/?src=reddit_ih
 
@@ -47,7 +47,7 @@ I'm validating Own-Your-Forms, a *planned* self-hosted WordPress form builder; n
 
 Instead of unlimited mandatory subscriptions: $10 per month for 26 payments, then own that version forever, including the newest major/minor release at payoff. Or $260 upfront with 36 months of launch-promotion updates/support. Data remains on customer hosting; basic forms, conditional logic, export and submissions are planned core capabilities.
 
-I'm interested in *buyer intent*, not generalized encouragement. Would your business actually take either offer? Please say what you currently use for forms and which option you would choose. Ten qualified prospective buyers trigger an MVP build, not a full launch.
+I'm interested in *buyer intent*, not generalized encouragement. Would your business actually take either offer? Please say what you currently use for forms and which option you would choose. Ten qualified prospective buyers support a beta decision, not a promise to ship.
 
 Details: https://docklightlabs.com/own-your-forms/?src=indie_hackers
 
