@@ -39,6 +39,28 @@
     footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     @media(max-width:700px){.hero{padding:55px 0 40px}.plan-grid,.info-grid{grid-template-columns:1fr}.plan{padding:23px}.plans{padding-bottom:45px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    .gate{max-width:800px;margin:23px 0 0;color:#cbd8ca;font-size:1rem}
+    .preview{padding:54px 0 60px;border-top:1px solid var(--line);background:#0e130f}
+    .preview h2{max-width:800px}.preview .sub{margin:0 0 24px}.builder{border:1px solid #43513e;background:#0a0d0b;border-radius:9px;overflow:hidden;box-shadow:0 24px 55px #0007}
+    .builder-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid #303c2d;background:#172017;font-size:.8rem;font-weight:750}
+    .builder-top .lights{color:var(--green);letter-spacing:.2rem}.builder-state{color:#d0e6a0;border:1px solid #587133;border-radius:99px;padding:2px 9px}
+    .builder-columns{display:grid;grid-template-columns:175px minmax(0,1fr) 218px;min-height:460px}
+    .builder-tools,.builder-settings{padding:20px 14px;font-size:.85rem;color:#c6d1c2;background:#111811}
+    .builder-tools{border-right:1px solid #303c2d}.builder-settings{border-left:1px solid #303c2d}
+    .builder-tools strong,.builder-settings strong{display:block;font-size:.67rem;letter-spacing:.12em;color:var(--green);margin-bottom:16px}
+    .builder-tools>span{display:block;border:1px solid #364436;background:#1b251b;padding:8px;margin-bottom:9px;border-radius:4px}
+    .builder-hint{font-size:.74rem;color:#a4b19e;margin-top:20px}
+    .builder-canvas{background:repeating-linear-gradient(0deg,transparent,transparent 24px,#ffffff05 25px),repeating-linear-gradient(90deg,transparent,transparent 24px,#ffffff05 25px);padding:21px 16px;display:grid;place-items:center}
+    .mock-paper{width:min(100%,390px);background:#f7f8f6;color:#152216;border-radius:6px;padding:23px;box-shadow:0 12px 24px #0004}
+    .mock-label{font:.66rem monospace;color:#517d25;letter-spacing:.15em}.mock-paper h3{font-size:1.5rem;margin:3px 0 0}.mock-paper p{color:#667262;font-size:.77rem;margin:0 0 12px}
+    .mock-field{padding:7px;margin:3px -7px 5px;border:1px solid transparent;border-radius:3px}.mock-field.selected{border:1px solid #649d1a;background:#eff9e3}
+    .mock-field b{display:block;font-size:.76rem;margin-bottom:3px}.mock-field em{color:#9c3b15;font-style:normal}.mock-input{border:1px solid #ccd5c8;padding:7px 9px;background:#fff;color:#768273;font-size:.76rem;display:flex;justify-content:space-between;min-height:30px}
+    .mock-input.tall{min-height:45px}.mock-send{background:#273d1b;color:#fff;font-size:.74rem;padding:9px;text-align:center;margin-top:11px}
+    .settings-name{font-weight:750;background:#1e2e1a;color:#e4f6cf;padding:9px;font-size:.85rem}
+    .settings-key{font-size:.64rem;color:#a5bb93;letter-spacing:.09em;margin-top:16px}.settings-value,.settings-rule{border:1px solid #33472f;background:#182318;padding:9px;font-size:.78rem;margin-top:6px}
+    .settings-rule span,.settings-rule b{display:block}.settings-rule span{color:#acbd9e}.settings-rule b{margin:4px 0 10px;color:#e2f3ce}
+    .mock-caption{font-size:.82rem;color:var(--muted);margin-top:10px}
+    @media(max-width:780px){.builder-columns{grid-template-columns:1fr}.builder-tools,.builder-settings{display:none}.builder-canvas{padding:18px 14px}.builder-top{font-size:.68rem}.builder-top .lights{display:none}}
   </style>
 </head>
 <body>
@@ -48,22 +70,57 @@
   </nav></header>
   <main>
     <section class="hero wrap" aria-labelledby="heading">
-      <div class="eyebrow">Website forms without a forever bill</div>
-      <h1 id="heading">Your forms. Your data. <em>Your software.</em></h1>
-      <p class="lead">A self-hosted form builder planned for WordPress business websites. Run it on hosting you already pay for. No submission meter. No forced ongoing software rental.</p>
-      <p class="lead">We invest in your start. You invest in a tool you'll eventually own outright.</p>
-      <div class="notice"><strong>This is a genuine prelaunch price test, not a checkout.</strong> The software is in planning. Tell us which offer you would buy when released. No deposit, card details, binding order or payment is taken today; no release date is promised.</div>
-      <p class="lead" style="margin-top:22px"><strong>When do we build it?</strong> When 10 distinct, genuine businesses or website owners tell us they would buy at one of the prices below, we move to building the first usable version. Your email should include your business, website, or intended use so we can count real demand. Ten expressions of interest authorize an MVP build—not a guaranteed full release. If genuine demand falls short after outreach, we reassess before spending on the full build.</p>
+      <div class="eyebrow">No interest · No financing markup · Your forms, your data</div>
+      <h1 id="heading"><em>$10 a month.</em> Then it's yours.</h1>
+      <p class="lead">26 payments of $10. Total: <strong>$260—exactly the same as paying cash.</strong> We're financing a planned self-hosted WordPress form builder, not multiplying the price because you need installments.</p>
+      <p class="lead">Run forms on your own hosting. No vendor branding, no response meter, no mandatory software rent after payoff. These are planned product capabilities.</p>
+      <div class="notice"><strong>Prelaunch, no money taken.</strong> This is a nonbinding purchase-intent test. We only open purchasing after a usable product ships. If it never ships, you never pay.</div>
+      <p class="gate"><strong>Our commercial validation trigger: 10 genuine prospective buyers.</strong> We can prototype the product before that. If ten independent businesses or website owners tell us they would buy at one of the advertised prices and identify a real intended use, we have a reason to move toward a tested beta. Buyer interest is not a paid preorder, a guaranteed release, or a substitute for reliability testing.</p>
+    </section>
+    <section class="preview" aria-labelledby="preview-heading">
+      <div class="wrap">
+        <div class="eyebrow">What we're proposing</div>
+        <h2 id="preview-heading">A builder that looks like a tool, not a billing department.</h2>
+        <p class="sub">Picture dragging fields into a quote-request form, setting simple rules and collecting replies on your own site. Here is the proposed editing experience.</p>
+        <div class="builder" role="img" aria-label="Design concept: form builder with a left field palette, center quote-request form preview and right conditional-logic settings.">
+          <div class="builder-top"><span class="lights" aria-hidden="true">● ● ●</span><span>Own-Your-Forms / Quote Request</span><span class="builder-state">Concept preview</span></div>
+          <div class="builder-columns">
+            <div class="builder-tools">
+              <strong>ADD A FIELD</strong>
+              <span>✚ Short text</span><span>✚ Email</span><span>✚ Dropdown</span><span>✚ File upload</span><span>✚ Date</span>
+              <div class="builder-hint">12 field types planned for v1</div>
+            </div>
+            <div class="builder-canvas">
+              <div class="mock-paper">
+                <div class="mock-label">YOUR WEBSITE FORM</div>
+                <h3>Get a quote</h3><p>Tell us a little about your project.</p>
+                <div class="mock-field"><b>Name <em>*</em></b><div class="mock-input">Your full name</div></div>
+                <div class="mock-field"><b>Email <em>*</em></b><div class="mock-input">you@example.com</div></div>
+                <div class="mock-field selected"><b>What do you need? <em>*</em></b><div class="mock-input">Pool leak inspection <span>⌄</span></div></div>
+                <div class="mock-field"><b>Tell us more</b><div class="mock-input tall">Describe the problem…</div></div>
+                <div class="mock-send">Request a quote →</div>
+              </div>
+            </div>
+            <div class="builder-settings">
+              <strong>FIELD SETTINGS</strong><div class="settings-name">What do you need?</div>
+              <div class="settings-key">TYPE</div><div class="settings-value">Dropdown</div>
+              <div class="settings-key">CONDITIONAL RULE</div><div class="settings-rule"><span>IF selection =</span><b>Pool leak inspection</b><span>THEN show</span><b>Tell us more</b></div>
+              <div class="builder-hint">Logic, validation and exports planned.</div>
+            </div>
+          </div>
+        </div>
+        <p class="mock-caption"><strong>Illustrative design concept only.</strong> This is not a screenshot of functioning or completed software.</p>
+      </div>
     </section>
     <section id="offers" class="plans">
       <div class="wrap">
-        <div class="eyebrow">Choose how you'd buy</div><h2>Same $260 first-license price. Two ways to own it.</h2>
-        <p class="sub">Both paths lead to ownership. Major and minor versions released during your entitlement are included, not sold back to you as upgrades.</p>
+        <div class="eyebrow">Choose how you'd own it</div><h2>$260 either way. No interest. No installment markup.</h2>
+        <p class="sub">Installments lower the starting hurdle; paying upfront rewards you with more included coverage. Payment-method processing charges, if any, are separately disclosed and subject to applicable law. Every eligible major and minor version is included during your support/update term.</p>
         <div class="plan-grid">
           <article class="plan" aria-labelledby="rto-title">
             <div class="name" id="rto-title">Rent to own</div>
             <div class="price">$10 <small>/ month</small></div>
-            <p class="detail">26 monthly payments · $260 total for the first license · no upfront license payment beyond the first scheduled installment when launched.</p>
+            <p class="detail"><strong>First $10 when the software is ready.</strong> Then 25 more monthly payments. $10 × 26 = $260, exactly the outright license price.</p>
             <ul>
               <li>26 months of included support and updates.</li>
               <li>Every available version through the date your last installment clears.</li>
@@ -71,7 +128,7 @@
               <li>Need another license? Each additional one is $9/month for its own 26-month term ($234 total).</li>
             </ul>
             <a class="cta" href="mailto:docklightlabs@gmail.com?subject=OWN-YOUR-FORMS%20%7C%20RENT-TO-OWN%20INTEREST&body=I%20would%20purchase%20Own-Your-Forms%20at%20%2410%2Fmonth%20for%2026%20payments%20when%20available.%0A%0AMy%20name%3A%20%0ABusiness%20or%20website%3A%20%0AHow%20many%20licenses%20would%20I%20need%3A%20%0AWhat%20do%20I%20use%20for%20forms%20now%20(optional)%3A%20%0A%0AI%20understand%20this%20is%20an%20unpaid%2C%20nonbinding%20prelaunch%20expression%20of%20purchase%20interest.">I'd buy at $10/month →</a>
-            <p class="after">Opens a prefilled email. Sending it is the reservation signal.</p>
+            <p class="after">Opens a prefilled email. Sending it is the reservation signal. Webmail-only? Write to <strong>docklightlabs@gmail.com</strong> with subject <strong>OWN-YOUR-FORMS | RENT-TO-OWN INTEREST</strong>.</p>
           </article>
           <article class="plan featured" aria-labelledby="cash-title">
             <div class="eyebrow">Founding-buyer coverage offer</div>
@@ -80,12 +137,12 @@
             <p class="detail">One payment at launch. Own your license after that payment clears.</p>
             <ul>
               <li>Normally 30 months of support and updates.</li>
-              <li><strong>Prelaunch promotion: 36 months of support and updates</strong> if purchased under the founding offer.</li>
+              <li><strong>Founding offer: 36 months of support and updates—10 extra months compared with installments.</strong> You pay in full, removing our 26-month collection risk; we return that benefit in longer coverage. Standard outright coverage is 30 months.</li>
               <li>All major and minor releases during the coverage period included.</li>
               <li>Keep the last entitled version indefinitely; further updates/support are optional.</li>
             </ul>
             <a class="cta" href="mailto:docklightlabs@gmail.com?subject=OWN-YOUR-FORMS%20%7C%20OUTRIGHT%20INTEREST&body=I%20would%20purchase%20Own-Your-Forms%20for%20%24260%20outright%20under%20the%20prelaunch%2036-month%20support%20and%20updates%20offer%20when%20available.%0A%0AMy%20name%3A%20%0ABusiness%20or%20website%3A%20%0AHow%20many%20licenses%20would%20I%20need%3A%20%0AWhat%20do%20I%20use%20for%20forms%20now%20(optional)%3A%20%0A%0AI%20understand%20this%20is%20an%20unpaid%2C%20nonbinding%20prelaunch%20expression%20of%20purchase%20interest.">I'd buy outright for $260 →</a>
-            <p class="after">Opens a prefilled email. Sending it is the reservation signal.</p>
+            <p class="after">Opens a prefilled email. Sending it is the reservation signal. Webmail-only? Write to <strong>docklightlabs@gmail.com</strong> with subject <strong>OWN-YOUR-FORMS | OUTRIGHT INTEREST</strong>.</p>
           </article>
         </div>
       </div>
@@ -100,7 +157,8 @@
         </div>
         <div>
           <div class="eyebrow">Straight answers</div><h2>Before you reserve</h2>
-          <details><summary>Am I paying or entering a contract today?</summary><p>No. This price-test reservation is an email expression of purchase interest, not a transaction or binding commitment. We will contact you with the final release offer; you decide whether to buy then.</p></details>
+          <details><summary>What if it never ships? Am I paying for unfinished software?</summary><p>No. There is no prelaunch checkout, deposit or installment contract. We only collect expressions of purchase interest. If no product ships, nothing is charged. If it does ship, you review the finished offer and decide whether to buy then.</p></details>
+          <details><summary>What if I stop paying before I own it?</summary><p>An installment license is not fully owned or transferable before the last payment clears. The exact missed-payment, cancellation, grace-period and customer-data-access terms will be published in the written agreement before checkout; we are not asking you to accept unspecified terms or pay anything now.</p></details>
           <details><summary>What happens after all 26 installments?</summary><p>Installment billing ends and the latest version available on the date your final payment clears becomes yours to keep. Updates and support are included throughout the scheduled 26-month term.</p></details>
           <details><summary>Can I transfer a license?</summary><p>Not while payments remain outstanding. Transfer eligibility begins at 12:01 a.m. Eastern Time on the calendar day after the final payment clears. A $25 transfer-administration fee applies.</p></details>
           <details><summary>Are there payment-processing charges?</summary><p>Any applicable payment-method fees would be disclosed before actual checkout and charged only where permitted. No payment method or charge is involved in this reservation.</p></details>
