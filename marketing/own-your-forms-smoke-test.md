@@ -1,8 +1,8 @@
 # Own-Your-Forms — launch-week distribution pack (2026-10-03)
 
-**Status:** Prepared, NOT posted to external communities. This is a PRELAUNCH price-validation experiment; there is no downloadable product or live checkout.
+**Status:** Prepared, NOT posted to external communities. This is a PRELAUNCH price-validation experiment; there is no downloadable product or live checkout. **Distribution hold:** do not direct paid/bulk traffic until browser-independent lead capture is verified end-to-end; the current email-client reservation links are a temporary fallback.
 
-**Main offer:** $260 outright (30 months support/updates; 36 months for launch buyers), or rent-to-own $10 per month for 26 payments ($260). Each additional installment license is $9/month for its own 26-payment term. All major/minor versions and email support during entitlement. Ownership after final cleared payment; the entitled version keeps working thereafter. Customer-site form submissions stay on customer hosting by design.
+**Main offer:** NO INTEREST / NO FINANCING MARKUP: $260 outright (30 months support/updates; 36 months for founding launch buyers), or rent-to-own $10 per month for 26 payments ($260, identical base license price). The founding cash buyer receives 10 extra months of support/updates versus installments as a reward for removing DockLight's 26-month collection risk. Each additional installment license is $9/month for its own 26-payment term. All major/minor versions and email support during entitlement. Ownership after final cleared payment; the entitled version keeps working thereafter. Customer-site form submissions stay on customer hosting by design.
 
 **Gate A:** 10 independent, credible business owners/website owners/freelancers identifying a concrete use and explicitly saying they WOULD BUY at the shown terms; count each person once. These are nonbinding intent emails, NOT sales. Passing Gate A starts the lean WordPress MVP only. Gate B = ten *paying* beta sites plus reliability/security and automated-support cost checks before full commercial launch.
 
