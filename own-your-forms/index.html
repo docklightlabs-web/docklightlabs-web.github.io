@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090b0a">
   <meta name="description" content="Own-Your-Forms: a self-hosted website form builder you buy, pay off, and keep. Prelaunch pricing: $260 outright or $10/month for 26 months. No payment collected yet.">
+  <link rel="canonical" href="https://docklightlabs.com/own-your-forms/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DockLight Labs">
+  <meta property="og:title" content="Own-Your-Forms | $10/month until it's yours">
+  <meta property="og:description" content="Own your self-hosted website form builder. $10/month for 26 payments or $260 outright. Help decide whether we build it: 10 real buyer commitments greenlight the MVP. Prelaunch only—no payment today.">
+  <meta property="og:url" content="https://docklightlabs.com/own-your-forms/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Own-Your-Forms | $10/month until it's yours">
+  <meta name="twitter:description" content="Prelaunch price test: $10 × 26 or $260 outright for a self-hosted form builder you keep. No payment collected.">
   <title>Own-Your-Forms | Prelaunch — DockLight Labs</title>
   <style>
     :root{color-scheme:dark;--bg:#090b0a;--surface:#121712;--line:#303b30;--text:#edf1e9;--muted:#aab5a5;--green:#aaee22}
@@ -101,4 +110,18 @@
     </section>
   </main>
   <footer><div class="wrap"><span>© DockLight Labs · Prelaunch interest test · No live product checkout</span><span>Questions? <a href="mailto:docklightlabs@gmail.com?subject=Own-Your-Forms%20question">docklightlabs@gmail.com</a></span></div></footer>
+<script>
+    // Privacy-light source attribution: no cookies, pixels or third-party requests.
+    // Source is added to a buyer's own drafted interest email only when they select an option.
+    (function () {
+      const source = new URLSearchParams(window.location.search).get('src');
+      if (!source || !/^[a-zA-Z0-9_-]{1,40}$/.test(source)) return;
+      document.querySelectorAll('a[href^="mailto:"][href*="INTEREST"]').forEach(function (link) {
+        const mail = new URL(link.href);
+        const original = mail.searchParams.get('body') || '';
+        mail.searchParams.set('body', original + '\n\nWhere I found this: ' + source);
+        link.href = mail.toString();
+      });
+    }());
+  </script>
 </body></html>
