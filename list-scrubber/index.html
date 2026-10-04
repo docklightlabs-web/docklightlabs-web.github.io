@@ -30,7 +30,7 @@ table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:10px;bor
 <main><div class="wrap">
 <div class="eyebrow">Email list cleaning + verification</div>
 <h1>Clean bad emails out of your list before you pay to verify them.</h1>
-<p class="lede">Upload an email CSV. DockLight removes duplicates, malformed addresses, disposable email domains, dead mail domains, role accounts, and other obvious failures. Then Deep Verify can probe the surviving mailboxes over SMTP and classify them as Send, Questionable, or Reject.</p>
+<p class="lede">Upload an email CSV. DockLight removes duplicates and malformed addresses, checks disposable and dead mail domains, and flags role accounts and likely typos for review. Then Deep Verify can probe the surviving mailboxes over SMTP and classify them as Send, Questionable, or Reject.</p>
 <div class="grid">
 <section class="panel">
 <h2>Clean an email list</h2>
@@ -59,6 +59,7 @@ Example:<br>
 <div class="stat question"><span>Questionable</span><b id="nQ">0</b></div>
 <div class="stat reject"><span>Reject</span><b id="nReject">0</b></div>
 </div>
+<div id="tipJar" class="notice" hidden><strong>Saved yourself a verification bill?</strong><p>Keep the dev’s line wet. The cleaner stays free; a little bait money is always welcome.</p><a href="https://ko-fi.com/docklightlabs" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:var(--green);color:#090b0a;padding:12px 17px;font-weight:800;text-decoration:none">🦐 Leave a tip</a><p class="small">Optional support through Ko-fi. No locked features. No nagging.</p></div>
 <div class="table-wrap" id="tableWrap" hidden>
 <table><thead><tr><th>Email</th><th>Class</th><th>Reason</th></tr></thead><tbody id="rows"></tbody></table>
 </div>
